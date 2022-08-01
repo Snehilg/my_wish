@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_wish/utils.dart';
 import 'package:get/get.dart';
 import 'package:my_wish/controllers/auth_controller.dart';
+import 'package:my_wish/widgets/login_widget.dart';
+import 'package:my_wish/widgets/register_widget.dart';
 
 class AuthScreen extends StatelessWidget {
   AuthController authController = Get.put(AuthController());
@@ -55,6 +57,9 @@ class AuthScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
+              Obx(() => authController.tab.value == "Login"
+                  ? LoginWidget()
+                  : RegisterWidget()),
             ],
           ),
         ),
