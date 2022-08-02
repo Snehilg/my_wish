@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:my_wish/controllers/auth_controller.dart';
 import 'package:my_wish/utils.dart';
 
 class LoginWidget extends StatelessWidget {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
+  AuthController authController = Get.find<AuthController>();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -47,7 +49,8 @@ class LoginWidget extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.6,
           height: 45,
           child: TextButton(
-            onPressed: () {},
+            onPressed: () => authController.loginUser(
+                emailController.text, passwordController.text),
             style: TextButton.styleFrom(backgroundColor: Colors.lightBlue),
             child: Text(
               "Login",
