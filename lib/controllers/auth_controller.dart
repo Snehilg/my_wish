@@ -4,12 +4,22 @@ import 'package:my_wish/utils.dart';
 
 class AuthController extends GetxController {
   RxString tab = "Login".obs;
+  Rx<User?> user = Rx<User?>(FirebaseAuth.instance.currentUser);
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   changeTab(value) {
     tab.value = value;
   }
 
+  //we use init fucntion to do things which app requires initially
+  @override
+  onInit() {
+    super.onInit();
+    user.bindStream(firebaseAuth.authStateChanges());
+  }
+
+//registering user function
+//also saves data in database
   registerUser(String email, String password, String username) async {
     UserCredential userCredential = await firebaseAuth
         .createUserWithEmailAndPassword(email: email, password: password);
@@ -23,6 +33,8 @@ class AuthController extends GetxController {
       });
     }
   }
+
+//checks is user is already registered then logs them in
 
   loginUser(String email, String password) async {
     try {

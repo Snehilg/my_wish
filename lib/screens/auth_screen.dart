@@ -6,7 +6,8 @@ import 'package:my_wish/widgets/login_widget.dart';
 import 'package:my_wish/widgets/register_widget.dart';
 
 class AuthScreen extends StatelessWidget {
-  AuthController authController = Get.put(AuthController());
+  //to find the already created authcontroller
+  AuthController authController = Get.find<AuthController>();
 
   buildTab(text, selected, context) {
     return Container(
@@ -15,6 +16,7 @@ class AuthScreen extends StatelessWidget {
       child: Center(
         child: Text(
           text,
+          //for changing state of login/register according to selected or not
           style: selected
               ? textStyle(22, Colors.lightBlueAccent, FontWeight.bold)
               : textStyle(22, Colors.grey, FontWeight.w500),
@@ -38,6 +40,7 @@ class AuthScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
+              //using obx reactive widget coz this widget will change it state with observable string tab in auth controller
               Obx(
                 () => Row(
                   children: [
@@ -57,6 +60,7 @@ class AuthScreen extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
+              //showing login/register widget according to selection
               Obx(() => authController.tab.value == "Login"
                   ? LoginWidget()
                   : RegisterWidget()),
