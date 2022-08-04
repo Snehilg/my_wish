@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_wish/controllers/home_controller.dart';
 import 'package:my_wish/utils.dart';
+import 'package:my_wish/widgets/wish_item.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeController homeController = Get.put(HomeController());
@@ -56,6 +57,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(
               height: 20,
             ),
+            //for responsive wishes/fulfilled tab
             Obx(
               () => Row(
                 children: [
@@ -72,6 +74,16 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
+            //List view builder for list of wishes
+            ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              padding: EdgeInsets.zero,
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                return WishItem();
+              },
+            )
           ],
         ),
       ),
