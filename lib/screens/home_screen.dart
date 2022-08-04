@@ -25,6 +25,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
+  //involves major functionality,understand nicely
   openAddWishSheet(context) {
     return showModalBottomSheet(
         isScrollControlled: true,
@@ -37,7 +38,7 @@ class HomeScreen extends StatelessWidget {
         builder: (context) {
           return Obx(
             () => Padding(
-              //paddinig is neccesary for uplifting the popup when keyboard comes out
+              //variale paddinig is neccesary for uplifting the popup when keyboard comes out
               padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom),
               child: SingleChildScrollView(
@@ -53,8 +54,11 @@ class HomeScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+                            //if image isnt selected then only show the icon
                             homeController.selectedPicture.value == ""
+                                //showing icon
                                 ? InkWell(
+                                    //function to invoke image picker and saving path
                                     onTap: () => homeController.selectPicture(),
                                     child: const Icon(
                                       Icons.add_a_photo,
@@ -62,17 +66,21 @@ class HomeScreen extends StatelessWidget {
                                       size: 45,
                                     ),
                                   )
+                                //showing selected image
                                 : InkWell(
+                                    //function to invoke image picker and saving path
                                     onTap: () => homeController.selectPicture(),
                                     child: Image(
                                       width: 60,
                                       height: 60,
                                       fit: BoxFit.cover,
+                                      //displaying image with path retrived from home controller
                                       image: FileImage(File(homeController
                                           .selectedPicture.value)),
                                     ),
                                   ),
                             Container(
+                              //for making it fit adding width
                               width: MediaQuery.of(context).size.width / 2.5,
                               margin:
                                   const EdgeInsets.only(left: 40, right: 40),
@@ -141,6 +149,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        //major function for adding wish fuctionality
         onPressed: () => openAddWishSheet(context),
         child: const Icon(
           Icons.add,

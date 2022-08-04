@@ -12,6 +12,7 @@ class HomeController extends GetxController {
     tab.value = value;
   }
 
+  //image picking and path saving functionality
   selectPicture() async {
     XFile? pickedFile =
         await imagePicker.pickImage(source: ImageSource.gallery);
