@@ -3,11 +3,12 @@ import 'package:get/get.dart';
 import 'package:my_wish/controllers/home_controller.dart';
 import 'package:my_wish/utils.dart';
 import 'package:my_wish/widgets/wish_item.dart';
+import 'dart:io';
 
 class HomeScreen extends StatelessWidget {
   HomeController homeController = Get.put(HomeController());
   TextEditingController priceController = TextEditingController();
-  TextEditingController wishSubTitle = TextEditingController();
+  TextEditingController titleController = TextEditingController();
 
   buildTab(text, selected, context) {
     return Container(
@@ -34,82 +35,100 @@ class HomeScreen extends StatelessWidget {
           topRight: Radius.circular(35),
         )),
         builder: (context) {
-          return Padding(
-            //paddinig is neccesary for uplifting the popup when keyboard comes out
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
-            child: SingleChildScrollView(
-              //scroll view to make it scrolable when bottom keyboard pops up
-              physics: const ScrollPhysics(),
-              child: Container(
-                height: 250,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(top: 20.0, left: 20, right: 20),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Icon(
-                            Icons.add_a_photo,
-                            color: Colors.grey,
-                            size: 45,
-                          ),
-                          Container(
-                            width: MediaQuery.of(context).size.width / 2.5,
-                            margin: const EdgeInsets.only(left: 40, right: 40),
-                            child: TextFormField(
-                              controller: priceController,
-                              style:
-                                  textStyle(16, Colors.grey, FontWeight.w500),
-                              decoration: InputDecoration(
-                                filled: true,
-                                fillColor: Colors.grey[250],
-                                hintText: "Price",
-                                hintStyle:
+          return Obx(
+            () => Padding(
+              //paddinig is neccesary for uplifting the popup when keyboard comes out
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: SingleChildScrollView(
+                //scroll view to make it scrolable when bottom keyboard pops up
+                physics: const ScrollPhysics(),
+                child: Container(
+                  height: 250,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 20.0, left: 20, right: 20),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            homeController.selectedPicture.value == ""
+                                ? InkWell(
+                                    onTap: () => homeController.selectPicture(),
+                                    child: const Icon(
+                                      Icons.add_a_photo,
+                                      color: Colors.grey,
+                                      size: 45,
+                                    ),
+                                  )
+                                : InkWell(
+                                    onTap: () => homeController.selectPicture(),
+                                    child: Image(
+                                      width: 60,
+                                      height: 60,
+                                      fit: BoxFit.cover,
+                                      image: FileImage(File(homeController
+                                          .selectedPicture.value)),
+                                    ),
+                                  ),
+                            Container(
+                              width: MediaQuery.of(context).size.width / 2.5,
+                              margin:
+                                  const EdgeInsets.only(left: 40, right: 40),
+                              child: TextFormField(
+                                controller: priceController,
+                                style:
                                     textStyle(16, Colors.grey, FontWeight.w500),
-                                border: InputBorder.none,
+                                decoration: InputDecoration(
+                                  filled: true,
+                                  fillColor: Colors.grey[250],
+                                  hintText: "Price",
+                                  hintStyle: textStyle(
+                                      16, Colors.grey, FontWeight.w500),
+                                  border: InputBorder.none,
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: TextFormField(
-                          controller: priceController,
-                          style: textStyle(16, Colors.grey, FontWeight.w500),
-                          decoration: InputDecoration(
-                            filled: true,
-                            fillColor: Colors.grey[250],
-                            hintText: "Your Wish",
-                            hintStyle:
-                                textStyle(16, Colors.grey, FontWeight.w500),
-                            border: InputBorder.none,
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          child: TextFormField(
+                            controller: titleController,
+                            style: textStyle(16, Colors.grey, FontWeight.w500),
+                            decoration: InputDecoration(
+                              filled: true,
+                              fillColor: Colors.grey[250],
+                              hintText: "Your Wish",
+                              hintStyle:
+                                  textStyle(16, Colors.grey, FontWeight.w500),
+                              border: InputBorder.none,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 45,
-                        child: TextButton(
-                          onPressed: () {},
-                          style: TextButton.styleFrom(
-                              backgroundColor: Colors.lightBlue),
-                          child: Text(
-                            "Add to My List",
-                            style: textStyle(20, Colors.white, FontWeight.bold),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 45,
+                          child: TextButton(
+                            onPressed: () {},
+                            style: TextButton.styleFrom(
+                                backgroundColor: Colors.lightBlue),
+                            child: Text(
+                              "Add to My List",
+                              style:
+                                  textStyle(20, Colors.white, FontWeight.bold),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
