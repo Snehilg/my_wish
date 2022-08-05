@@ -31,8 +31,9 @@ class HomeController extends GetxController {
         .snapshots() //taking the snapshot according to rules
         .map((query) {
       List<Wish> wishes = [];
+      //the length of query.docs or docslist is equal to number of wishes/fulfilled
       List<QueryDocumentSnapshot<Object?>> docslist = query.docs;
-      print("ye length wishes wale ke hai${docslist.length}");
+      //element is of the type queryDocumentSnapshot
       for (var element in docslist) {
         wishes.add(Wish.fromDocumentSnapshot(element));
       }
@@ -50,8 +51,9 @@ class HomeController extends GetxController {
         .snapshots() //taking the snapshot according to rules
         .map((query) {
       List<Wish> wishes = [];
+      //the length of query.docs or docslist is equal to number of wishes/fulfilled
       List<QueryDocumentSnapshot<Object?>> docslist = query.docs;
-      print("ye length fulfilled wale ke hai${docslist.length}");
+      //element is of the type queryDocumentSnapshot
       for (var element in docslist) {
         wishes.add(Wish.fromDocumentSnapshot(element));
       }
@@ -74,6 +76,11 @@ class HomeController extends GetxController {
         .collection('wishes')
         .doc(wishId)
         .update({'fulfilled': wishStatus});
+  }
+
+  //delete wish function
+  deleteWish(wishid) async {
+    await userCollection.doc(uid).collection('wishes').doc(wishid).delete();
   }
 
   //image picking and path saving functionality
