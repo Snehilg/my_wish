@@ -31,8 +31,9 @@ class Root extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //asa user logins home screen will open
+    //as soon as user logins home screen will open
     return Obx(
-        () => authController.user.value != null ? HomeScreen() : AuthScreen());
+      () => authController.user.value != null ? HomeScreen() : AuthScreen(),
+    );
   }
 }
