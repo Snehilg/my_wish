@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:my_wish/models/wish_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -10,10 +11,69 @@ class HomeController extends GetxController {
   RxString tab = "Wishes".obs;
   RxString selectedPicture = "".obs;
   ImagePicker imagePicker = ImagePicker();
+  String uid = FirebaseAuth.instance.currentUser!.uid;
   RxList<Wish> wishes = <Wish>[].obs;
+  RxList<Wish> fulfilledWishes = <Wish>[].obs;
+
+  @override
+  onInit() {
+    super.onInit();
+    getWishes();
+  }
+
+  //for wishes list
+  getWishes() {
+    //we use binding to bind the local things to something,notice changes to something and act accordingly
+    wishes.bindStream(userCollection
+        .doc(uid)
+        .collection('wishes')
+        .where('fulfilled', isEqualTo: false)
+        .snapshots() //taking the snapshot according to rules
+        .map((query) {
+      List<Wish> wishes = [];
+      List<QueryDocumentSnapshot<Object?>> docslist = query.docs;
+      print("ye length wishes wale ke hai${docslist.length}");
+      for (var element in docslist) {
+        wishes.add(Wish.fromDocumentSnapshot(element));
+      }
+      return wishes;
+    }));
+  }
+
+  //for fulfilled list
+  getFulfilledWishes() {
+    //we use binding to bind the local things to something,notice changes to something and act accordingly
+    fulfilledWishes.bindStream(userCollection
+        .doc(uid)
+        .collection('wishes')
+        .where('fulfilled', isEqualTo: true)
+        .snapshots() //taking the snapshot according to rules
+        .map((query) {
+      List<Wish> wishes = [];
+      List<QueryDocumentSnapshot<Object?>> docslist = query.docs;
+      print("ye length fulfilled wale ke hai${docslist.length}");
+      for (var element in docslist) {
+        wishes.add(Wish.fromDocumentSnapshot(element));
+      }
+      return wishes;
+    }));
+  }
 
   changeTab(value) {
     tab.value = value;
+    //we only wanna call it when
+    if (value == "Fulfilled" && fulfilledWishes.firstRebuild) {
+      getFulfilledWishes();
+    }
+  }
+
+  //for changing status of wish
+  fulfilledWish(wishStatus, wishId) async {
+    await userCollection
+        .doc(uid)
+        .collection('wishes')
+        .doc(wishId)
+        .update({'fulfilled': wishStatus});
   }
 
   //image picking and path saving functionality

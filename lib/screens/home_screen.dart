@@ -189,8 +189,11 @@ class HomeScreen extends StatelessWidget {
                       decoration: const BoxDecoration(
                           color: Colors.blue, shape: BoxShape.circle),
                       child: Center(
+                        //item count,showing it according to selected tab
                         child: Text(
-                          "10",
+                          homeController.tab.value == "Wishes"
+                              ? "${homeController.wishes.length}"
+                              : "${homeController.fulfilledWishes.length}",
                           style: textStyle(25, Colors.white, FontWeight.w500),
                         ),
                       ),
@@ -226,9 +229,9 @@ class HomeScreen extends StatelessWidget {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.zero,
-                      itemCount: 10,
+                      itemCount: homeController.wishes.length,
                       itemBuilder: (context, index) {
-                        return WishItem();
+                        return WishItem(homeController.wishes[index]);
                       },
                     )
                   //for fulfilled tab
@@ -236,9 +239,9 @@ class HomeScreen extends StatelessWidget {
                       shrinkWrap: true,
                       physics: NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.zero,
-                      itemCount: 1,
+                      itemCount: homeController.fulfilledWishes.length,
                       itemBuilder: (context, index) {
-                        return WishItem();
+                        return WishItem(homeController.fulfilledWishes[index]);
                       },
                     ),
             ],
