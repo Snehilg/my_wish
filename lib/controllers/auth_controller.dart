@@ -11,7 +11,7 @@ class AuthController extends GetxController {
     tab.value = value;
   }
 
-  //we use init fucntion to do things which app requires initially
+  //we use init function to do things which app requires initially
   @override
   onInit() {
     super.onInit();
@@ -26,6 +26,7 @@ class AuthController extends GetxController {
 
     User? user = userCredential.user;
 
+    //see user collection in utils.dart
     if (user != null) {
       userCollection.doc(user.uid).set({
         "email": email,

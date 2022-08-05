@@ -38,11 +38,11 @@ class HomeScreen extends StatelessWidget {
         builder: (context) {
           return Obx(
             () => Padding(
-              //variale paddinig is neccesary for uplifting the popup when keyboard comes out
+              //variable padding is necessary for uplifting the popup when keyboard comes out
               padding: EdgeInsets.only(
                   bottom: MediaQuery.of(context).viewInsets.bottom),
               child: SingleChildScrollView(
-                //scroll view to make it scrolable when bottom keyboard pops up
+                //scroll view to make it scrollable when bottom keyboard pops up
                 physics: const ScrollPhysics(),
                 child: Container(
                   height: 250,
@@ -54,7 +54,7 @@ class HomeScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            //if image isnt selected then only show the icon
+                            //if image isn't selected then only show the icon
                             homeController.selectedPicture.value == ""
                                 //showing icon
                                 ? InkWell(
@@ -163,9 +163,9 @@ class HomeScreen extends StatelessWidget {
           physics: const ScrollPhysics(),
           child: Column(
             children: [
-              //top row for heading and count of wishes
               Padding(
                 padding: const EdgeInsets.only(left: 20, top: 60, right: 20),
+                //top row for heading and count of wishes
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
