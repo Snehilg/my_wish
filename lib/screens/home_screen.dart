@@ -125,7 +125,17 @@ class HomeScreen extends StatelessWidget {
                           width: MediaQuery.of(context).size.width,
                           height: 45,
                           child: TextButton(
-                            onPressed: () {},
+                            //calling function for adding wish
+                            onPressed: () => homeController
+                                .addWish(titleController.text,
+                                    double.parse(priceController.text))
+                                .then((value) {
+                              titleController.clear();
+                              priceController.clear();
+                              homeController.selectedPicture.value = "";
+                              Get.back();
+                              Get.snackbar("Success", "Wish Added");
+                            }),
                             style: TextButton.styleFrom(
                                 backgroundColor: Colors.lightBlue),
                             child: Text(

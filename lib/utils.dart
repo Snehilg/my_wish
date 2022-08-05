@@ -6,6 +6,6 @@ TextStyle textStyle(double size, Color color, FontWeight fw) {
   return GoogleFonts.montserrat(fontSize: size, color: color, fontWeight: fw);
 }
 
-//just a reference to user table/collection in firebase DB
+//just a reference to user table/collection in firebase DB refer by google services file of that DB
 CollectionReference<Map<String, dynamic>> userCollection =
     FirebaseFirestore.instance.collection("user");
